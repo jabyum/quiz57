@@ -35,7 +35,13 @@ class UserAnswer(Base):
     user_fk = relationship(User, lazy="subquery")
     question_fk = relationship(Question, lazy="subquery")
 # на дз создать модель Rating (id, user_id, correct_answers, level)
-
+class Rating(Base):
+    __tablename__ = "rating"
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    user_id = Column(Integer, ForeignKey("users.id"))
+    level = Column(String, ForeignKey("questions.level"))
+    user_fk = relationship(User, lazy="subquery")
+    question_fk = relationship(Question, lazy="subquery")
 
 
 
