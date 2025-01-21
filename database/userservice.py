@@ -11,6 +11,7 @@ def add_user_db(name, phone_number):
     db.add(new_user)
     # сохраняем изменения
     db.commit()
+    return True
 # получение всех юзеров
 def get_all_user_db():
     # второй вариант создания сессии (актуальный)
@@ -27,7 +28,7 @@ def get_exact_user_db(id):
             return exact_user
         return "Юзер не найден"
 # функция сохранения ответа
-def user_answer_db(user_answer, user_id, q_id, level):
+def user_answer_db(user_id, q_id, level, user_answer=0):
     with next(get_db()) as db:
         exact_question = db.query(Question).filter_by(id=q_id).one()
         if exact_question.correct_answer == user_answer:

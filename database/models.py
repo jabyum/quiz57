@@ -25,6 +25,7 @@ class Question(Base):
     # timer = Column(Integer, default=45)
 # создаем модель Ответов юзера
 class UserAnswer(Base):
+    __tablename__ = "useranswer"
     id = Column(Integer, primary_key=True, autoincrement=True)
     user_id = Column(Integer, ForeignKey("users.id"))
     question_id = Column(Integer, ForeignKey("questions.id"))
