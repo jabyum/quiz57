@@ -12,7 +12,7 @@ class User(Base):
     phone_number = Column(String, unique=True)
     reg_date = Column(DateTime, default=datetime.now())
 # модель вопросов
-class Question():
+class Question(Base):
     __tablename__ = "questions"
     id = Column(Integer, primary_key=True, autoincrement=True)
     main_question = Column(String, nullable=False) # на самом деле nullable итак по умолчанию Flase
@@ -40,6 +40,7 @@ class Rating(Base):
     id = Column(Integer, primary_key=True, autoincrement=True)
     user_id = Column(Integer, ForeignKey("users.id"))
     level = Column(String, ForeignKey("questions.level"))
+    correct_answers = Column(Integer, default=0)
     user_fk = relationship(User, lazy="subquery")
     question_fk = relationship(Question, lazy="subquery")
 

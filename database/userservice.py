@@ -27,6 +27,37 @@ def get_exact_user_db(id):
             return exact_user
         return "Юзер не найден"
 # функция сохранения ответа
+def user_answer_db(user_answer, user_id, q_id, level):
+    with next(get_db()) as db:
+        exact_question = db.query(Question).filter_by(id=q_id).one()
+        if exact_question.correct_answer == user_answer:
+            new_answer = UserAnswer(user_id=user_id, question_id=q_id,
+                                    user_answer=user_answer, correctness=True,
+                                    level=level)
+            db.add(new_answer)
+            db.commit()
+            user_rating = db.query(Rating).filter_by(user_id=user_id, level=level).filter_by().one()
+            if user_rating:
+                user_rating.correct_answers += 1
+                db.commit()
+            elif not user_rating:
+                new_rating = Rating(user_id=user_id, level=level,
+                                    correct_answers=1)
+                db.add(new_rating)
+                db.commit()
+            return True
+        else:
+            new_answer = UserAnswer(user_id=user_id, question_id=q_id,
+                                    user_answer=user_answer, correctness=False,
+                                    level=level)
+            db.add(new_answer)
+            db.commit()
+            return False
+
+
+
+
+
 
 
 
